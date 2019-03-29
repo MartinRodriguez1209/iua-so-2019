@@ -1,0 +1,63 @@
+Sistemas Operativos - Practico - Productor/Consumidor
+-----------------------------------------------------
+
+Objetivo: Implementar una solución al problema del
+Productor/Consumidor utilizando mutex y pthreads.
+
+Referencias:
+a- https://computing.llnl.gov/tutorials/pthreads/
+b- https://www.cs.cf.ac.uk/Dave/C/
+
+1) Deberá implementar una solución del problema clásico PC
+con 1 productor y un consumidor
+
+* Ambos deberán ser hilos del proceso principal
+* Deberá haber un buffer donde se almacenan o consumen los recursos
+* El acceso al buffer debe protejerse por medio de un mutex
+  ver https://computing.llnl.gov/tutorials/pthreads/#Mutexes
+* Muestre el contenido del buffer al producir/consumir
+
+2) Generalice el problema anterior a N productores/consumidores
+
+* Pase el valor de N por línea de comando
+
+NOTAS:
+
+* Analizar páginas de manual de
+  pthread_mutex_lock
+  pthread_mutex_unlock
+  pthread_cond_signal
+  pthread_cond_wait
+
+* Problema del productor/consumidor
+  - Definicion
+    Productor y consumidor deben compartir un buffer común
+  - El consumidor no debe intentar consumir un item que no 
+    ha sido producido
+  - El buffer común debe ser acotado (valor arbitrario), de 
+    forma que el productor espere si está lleno y el consumidor
+    debe esperar si está vacio
+
+* Se deben crear los hilos para productor y consumidor, comparten
+  un buffer acotado
+
+  El productor pone enteros en el buffer comenzado por 0, hasta un
+  valor máximo MAX predefinido de enteros ingresados. 
+  Se anuncia cada item producido
+
+  El consumidor remueve un entero a la vez, lo anuncia. Los consumidores
+  terminan cuando se han removido MAX items.
+
+* Utilice espera activa para la espera
+* Utilice excusión mutua para la consulta del buffer y la producción/
+  consumición
+* Determine las regiones críticas y utilice pthread_mutex_lock( ) y pthread_mutex_unlock( )
+  para ganartizar la exclusión mutua
+
+* En lugar de utilizar espera activa puede utilizar el equivalente a semáforos y sus
+  funciones wait() y signal() provisto por las variables de condición de hilos
+  - pthread_cond_wait( ) fuerza a un hilo a esperar hasta que se cumple
+    una cierta condición
+  - pthread_cond_signal() señaliza una variable de condición particular
+
+
